@@ -1,0 +1,25 @@
+ [http]
+  [http.routers.pihole]
+    entrypoints = ["http"]
+    rule = "Host(`pihole.igou.homelab`)"
+    service = "pihole"
+    middlewares = ["pihole"]
+
+  [http.routers.omv]
+    entrypoints = ["http"]
+    rule = "Host(`openmediavault.igou.homelab`)"
+    service = "omv"
+
+  [http.middlewares] 
+    [http.middlewares.pihole.addPrefix]
+      prefix = "/admin"
+
+  [http.services]
+    [http.services.omv.loadbalancer]
+      [[http.services.omv.loadBalancer.servers]]
+        url = "http://172.17.0.1:81/"
+
+
+    [http.services.pihole.loadbalancer]
+      [[http.services.pihole.loadBalancer.servers]]
+        url = "http://172.17.0.1:1337"
