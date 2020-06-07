@@ -1,0 +1,28 @@
+version: '3.7'
+services:
+  minio:
+    container_name: minio
+    environment:
+      - 'MINIO_DOMAIN=minio.igou.homelab'
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==helios4"
+          - "node.role==manager"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.minio.rule=Host(`minio.igou.homelab`)"
+        - "traefik.http.routers.minio.entrypoints=http"
+        - "traefik.http.services.minio.loadbalancer.server.port=9000"
+    image: jessestuart/minio:RELEASE.2020-01-03T19-12-21Z
+    volumes:
+      - type: bind
+        source: /srv/dev-disk-by-label-prom
+        target: /data
+    networks:
+      - proxy
+    command: server  /data
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,22 @@
+# This is an example nginx container I currently use to make sure things are working properly
+version: '3.7'
+services:
+  helloworld:
+    container_name: helloworld
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==helios4"
+          - "node.role==manager"
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.routers.helloworld.rule=Host(`helloworld.igou.homelab`)"
+        - "traefik.http.routers.helloworld.entrypoints=http"
+        - "traefik.http.services.helloworld.loadbalancer.server.port=80"
+    image: nginx:alpine
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true

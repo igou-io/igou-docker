@@ -1,0 +1,3 @@
+data/*
+*.swp
+config/minio/minio.env
