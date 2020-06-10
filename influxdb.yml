@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  influxdb:
+    container_name: influxdb
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==pettingzoo"
+#      labels:
+#        - "traefik.enable=true"
+#        - "traefik.http.routers.influxdb.rule=Host(`influxdb.igou.homelab`)"
+#        - "traefik.http.routers.influxdb.entrypoints=http"
+#        - "traefik.http.services.influxdb.loadbalancer.server.port=9000"
+    env_file:
+     - ./config/influxdb/influxdb.env
+    image: influxdb
+    volumes:
+      - '/container_storage/influxdb:/var/lib/influxdb'
+    ports:
+      - '8086:8086'
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
