@@ -2,11 +2,9 @@
 
 ## Why I have a swarm host in addition to a Kubernetes cluster in my lab
 
-* My Kubernetes cluster is deleted/rebuilt very frequently
-** This makes running applications that require storage require a lot of overhead. I have tasks in my backlog to design a solution to manage that. But I would rather make that something I can work on in parralel to other things, since it is quite ambitious.
+* My Kubernetes cluster is deleted/rebuilt very frequently, This makes running applications that require storage require a lot of overhead. I have tasks in my backlog to design a solution to manage that. But I would rather make that something I can work on in parallel to other things, since it is quite ambitious.
 
-* I can use Traefik in swarm to proxy applications that aren't ran a container.
-** For example my NAS is a swarm agent with OpenMediaVault (And other services I really don't want to containerize)  exposed to the docker network, which allow me to reverse proxy to them.
+* I can use Traefik in swarm to proxy applications that aren't ran a container. For example my NAS is a swarm agent with OpenMediaVault (And other services I really don't want to containerize)  exposed to the docker network, which allow me to reverse proxy to them.
 
 * Raspberry Pi Zeros cannot run k3s-agent
 
