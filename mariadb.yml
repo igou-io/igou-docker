@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  mariadb:
+    container_name: mariadb
+    deploy:
+      placement:
+        constraints:
+          - "node.hostname==pettingzoo"
+#      labels:
+#        - "traefik.enable=true"
+#        - "traefik.http.routers.influxdb.rule=Host(`influxdb.igou.homelab`)"
+#        - "traefik.http.routers.influxdb.entrypoints=http"
+#        - "traefik.http.services.influxdb.loadbalancer.server.port=9000"
+    env_file:
+     - ./config/mariadb/mariadb.env
+    image: mariadb
+    volumes:
+      - '/container_storage/mariadb:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
